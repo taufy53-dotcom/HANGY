@@ -1,4 +1,3 @@
-
 from PIL import Image 
 import customtkinter as ctk 
 import tkinter as tk 
@@ -6,12 +5,24 @@ import pygame
 import random
 import sqlite3
 import os
+import sys
+
+def resource_path(relative_path):
+    """Get to absolute path to resorce, works for development and PyInstaller."""
+    
+    try:
+        base_path = sys._MEIPASS
+        
+    except Exception:
+        base_path = os.path.abspath(".")
+        
+    return os.path.join(base_path, relative_path)
 
 
 
-IMAGE_DIR = "images"
-MUSIC_DIR = "music"
-SAVE_DIR = "saves"
+IMAGE_DIR = resource_path("images")
+MUSIC_DIR = resource_path("music")
+SAVE_DIR = resource_path("saves")
 
 def img(name):
 	return os.path.join(IMAGE_DIR, name)
@@ -39,12 +50,12 @@ app.title("HANGY")
 app.geometry("720x500")
 #----------------------------------------------------MUSIC----------------------------------------------------------------------
 
-pygame.mixer.music.load(music("Music.mpeg"))
+pygame.mixer.music.load(resource_path(music("Music.mpeg")))
 pygame.mixer.music.play(-1)
 
-click_sound = pygame.mixer.Sound(music("click.mp3"))
-win_sound = pygame.mixer.Sound(music("ywin.mp3"))
-lost_sound = pygame.mixer.Sound(music("ylost.mp3"))
+click_sound = pygame.mixer.Sound(resource_path(music("click.mp3")))
+win_sound = pygame.mixer.Sound(resource_path(music("ywin.mp3")))
+lost_sound = pygame.mixer.Sound(resource_path(music("ylost.mp3")))
 
 def play_click():
 	click_sound.play()
@@ -57,7 +68,7 @@ def play_lost():
 
 #-----------------------------------------------------words--------------------------------------------------------------------
 
-with open("words.txt", "r") as file:
+with open(resource_path("words.txt"), "r") as file:
 	all_words = [word.strip().lower() for word in file if word.strip()]
 
 
@@ -114,8 +125,8 @@ def register():
 		reg.resizable(False, False)
 
 		reg_img = ctk.CTkImage(
-			light_image = Image.open(img("w.png")),
-			dark_image = Image.open(img("w.png")),
+			light_image = Image.open(resource_path(img("w.png"))),
+			dark_image = Image.open(resource_path(img("w.png"))),
 			size = (600,450))
 
 		reg_label = ctk.CTkLabel(
@@ -140,8 +151,8 @@ def register():
 		username_entry.place(relx = 0.5, rely = 0.68, anchor = "center")
 
 		start_img = ctk.CTkImage(
-			light_image = Image.open(img("start.png")),
-			dark_image = Image.open(img("start.png")),
+			light_image = Image.open(resource_path(img("start.png"))),
+			dark_image = Image.open(resource_path(img("start.png"))),
 			size = (215,52))
 
 		def save_username(event = None):
@@ -195,8 +206,8 @@ def welcome_window(username):
     wel.resizable(False, False)
 
     wel_img = ctk.CTkImage(
-        light_image=Image.open(img("wel.jpeg")),
-        dark_image=Image.open(img("wel.jpeg")),
+        light_image=Image.open(resource_path(img("wel.jpeg"))),
+        dark_image=Image.open(resource_path(img("wel.jpeg"))),
         size=(600,450)
     )
 
@@ -250,8 +261,8 @@ register()
 #-------------------------------------------------------BG----------------------------------------------------------------------
 
 bg_image = ctk.CTkImage(
- 	light_image = Image.open(img("bg.jpeg")),
-	dark_image = Image.open(img("bg.jpeg")),
+ 	light_image = Image.open(resource_path(img("bg.jpeg"))),
+	dark_image = Image.open(resource_path(img("bg.jpeg"))),
 	size = (720,500))
 
 bg_label = ctk.CTkLabel(
@@ -264,8 +275,8 @@ bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 #------------------------------------------------------PLAY----------------------------------------------------------------------
 
 play_img = ctk.CTkImage(
-	light_image = Image.open(img("play.png")),
-	dark_image = Image.open(img("play.png")),
+	light_image = Image.open(resource_path(img("play.png"))),
+	dark_image = Image.open(resource_path(img("play.png"))),
 	size = (180,42))
 
 
@@ -309,8 +320,8 @@ def diff(event):
 	diff_win.protocol("WM_DELETE_WINDOW", close_diff)
 
 	diff_img = ctk.CTkImage(
-		light_image = Image.open(img("diff.png")),
-		dark_image = Image.open(img("diff.png")),
+		light_image = Image.open(resource_path(img("diff.png"))),
+		dark_image = Image.open(resource_path(img("diff.png"))),
 		size = (720,500))
 
 	diff_label = ctk.CTkLabel(
@@ -322,8 +333,8 @@ def diff(event):
 	diff_label.image = diff_img 
 
 	pf_img = ctk.CTkImage(
-		light_image = Image.open(img("pf.png")),
-		dark_image = Image.open(img("pf.png")),
+		light_image = Image.open(resource_path(img("pf.png"))),
+		dark_image = Image.open(resource_path(img("pf.png"))),
 		size = (180,60))
 
 	xrank_label = ctk.CTkLabel(
@@ -346,8 +357,8 @@ def diff(event):
     # ---------------- Background ----------------
 
 		profile_bg = ctk.CTkImage(
-			light_image=Image.open(img("pp.jpeg")),
-			dark_image=Image.open(img("pp.jpeg")),
+			light_image=Image.open(resource_path(img("pp.jpeg"))),
+			dark_image=Image.open(resource_path(img("pp.jpeg"))),
 			size=(600, 450)
 		)
 
@@ -436,38 +447,38 @@ def diff(event):
 				anchor = "center")   
 
 
-		xrank_label(
+		xrank_label.bind(
 			"<Button-1>",
 			lambda e: show_profile())
 
 
 	word2_img = ctk.CTkImage(
-		light_image=Image.open(img("2.jpeg")),
-		dark_image=Image.open(img("2.jpeg")),
+		light_image=Image.open(resource_path(img("2.jpeg"))),
+		dark_image=Image.open(resource_path(img("2.jpeg"))),
 		size=(180, 42)
 		)
 
 	word3_img = ctk.CTkImage(
-		light_image=Image.open(img("3.jpeg")),
-		dark_image=Image.open(img("3.jpeg")),
+		light_image=Image.open(resource_path(img("3.jpeg"))),
+		dark_image=Image.open(resource_path(img("3.jpeg"))),
 		size=(180, 42)
 		)
 
 	word4_img = ctk.CTkImage(
-		light_image=Image.open(img("4.jpeg")),
-		dark_image=Image.open(img("4.jpeg")),
+		light_image=Image.open(resource_path(img("4.jpeg"))),
+		dark_image=Image.open(resource_path(img("4.jpeg"))),
 		size=(180, 42)
 		)
 
 	word5_img = ctk.CTkImage(
-		light_image=Image.open(img("5.jpeg")),
-		dark_image=Image.open(img("5.jpeg")),
+		light_image=Image.open(resource_path(img("5.jpeg"))),
+		dark_image=Image.open(resource_path(img("5.jpeg"))),
 		size=(180, 42)
 		)
 
 	word5plus_img = ctk.CTkImage(
-		light_image=Image.open(img("5a.jpeg")),
-		dark_image=Image.open(img("5a.jpeg")),
+		light_image=Image.open(resource_path(img("5a.jpeg"))),
+		dark_image=Image.open(resource_path(img("5a.jpeg"))),
 		size=(180, 42)
 		)
 
@@ -523,8 +534,8 @@ def diff(event):
 		game_win.protocol("WM_DELETE_WINDOW", close_game)
 
 		g_bg = ctk.CTkImage(
-			light_image = Image.open(img("gbg.jpeg")),
-			dark_image = Image.open(img("gbg.jpeg")),
+			light_image = Image.open(resource_path(img("gbg.jpeg"))),
+			dark_image = Image.open(resource_path(img("gbg.jpeg"))),
 			size = (720,500))
 
 		g_bg_label = ctk.CTkLabel(
@@ -582,18 +593,18 @@ def diff(event):
 			hidden_word[pos2] = word[pos2].upper()
 
 		ywin_img  = ctk.CTkImage(
-			light_image = Image.open(img("ywin.png")),
-			dark_image = Image.open(img("ywin.png")),
+			light_image = Image.open(resource_path(img("ywin.png"))),
+			dark_image = Image.open(resource_path(img("ywin.png"))),
 			size = (360,84))
 
 		ylost_img  = ctk.CTkImage(
-			light_image = Image.open(img("ylost.png")),
-			dark_image = Image.open(img("ylost.png")),
+			light_image = Image.open(resource_path(img("ylost.png"))),
+			dark_image = Image.open(resource_path(img("ylost.png"))),
 			size = (360,84))
 
 		frame_img  = ctk.CTkImage(
-			light_image = Image.open(img("fr.png")),
-			dark_image = Image.open(img("fr.png")),
+			light_image = Image.open(resource_path(img("fr.png"))),
+			dark_image = Image.open(resource_path(img("fr.png"))),
 			size = (360,84))
 
 
@@ -624,8 +635,8 @@ def diff(event):
 
 
 		score_img  = ctk.CTkImage(
-			light_image = Image.open(img("sc.png")),
-			dark_image = Image.open(img("sc.png")),
+			light_image = Image.open(resource_path(img("sc.png"))),
+			dark_image = Image.open(resource_path(img("sc.png"))),
 			size = (180,42))
 
 		score_label = ctk.CTkLabel(
@@ -646,8 +657,8 @@ def diff(event):
 		score_value.place(relx=0.25 , rely = 0.1, anchor = "center")
 
 		streak_img = ctk.CTkImage(
-			light_image = Image.open(img("st.png")),
-			dark_image = Image.open(img("st.png")),
+			light_image = Image.open(resource_path(img("st.png"))),
+			dark_image = Image.open(resource_path(img("st.png"))),
 			size = (180,42))
 
 		streak_label = ctk.CTkLabel(
@@ -668,8 +679,8 @@ def diff(event):
 
 
 		garea_img = ctk.CTkImage(
-			light_image = Image.open(img("garea.jpeg")),
-			dark_image = Image.open(img("garea.jpeg")),
+			light_image = Image.open(resource_path(img("garea.jpeg"))),
+			dark_image = Image.open(resource_path(img("garea.jpeg"))),
 			size = (260,90))
 
 		garea_label = ctk.CTkLabel(
@@ -692,8 +703,8 @@ def diff(event):
 		guess_entry.place(relx = 0.5, rely = 0.65, anchor = "center")
 
 		gus_img = ctk.CTkImage(
-			light_image = Image.open(img("guess.jpeg")),
-			dark_image = Image.open(img("guess.jpeg")),
+			light_image = Image.open(resource_path(img("guess.jpeg"))),
+			dark_image = Image.open(resource_path(img("guess.jpeg"))),
 			size = (180,42))
 
 		gus_label = ctk.CTkLabel(
@@ -704,23 +715,23 @@ def diff(event):
 		gus_label.place(relx=0.5,rely=0.78, anchor = "center")
 
 		l0_img = ctk.CTkImage(
-			light_image=Image.open(img("l0.png")),
-            		dark_image=Image.open(img("l0.png")),
+			light_image=Image.open(resource_path(img("l0.png"))),
+            		dark_image=Image.open(resource_path(img("l0.png"))),
             		size=(130, 40))
 
 		l1_img = ctk.CTkImage(
-            		light_image=Image.open(img("l1.png")),
-			dark_image=Image.open(img("l1.png")),
+            		light_image=Image.open(resource_path(img("l1.png"))),
+			dark_image=Image.open(resource_path(img("l1.png"))),
 			size=(130, 40))
 
 		l2_img = ctk.CTkImage(
-            		light_image=Image.open(img("l2.png")),
-            		dark_image=Image.open(img("l2.png")),
+            		light_image=Image.open(resource_path(img("l2.png"))),
+            		dark_image=Image.open(resource_path(img("l2.png"))),
             		size=(130, 40))
 
 		l3_img = ctk.CTkImage(
-            		light_image=Image.open(img("l3.png")),
-            		dark_image=Image.open(img("l3.png")),
+            		light_image=Image.open(resource_path(img("l3.png"))),
+            		dark_image=Image.open(resource_path(img("l3.png"))),
             		size=(130, 40))
 
 		lives = 3
@@ -755,8 +766,8 @@ def diff(event):
 			hover_color = "#8B0000")
 
 		res_img = ctk.CTkImage(
-			light_image = Image.open(img("res.jpeg")),
-			dark_image = Image.open(img("res.jpeg")),
+			light_image = Image.open(resource_path(img("res.jpeg"))),
+			dark_image = Image.open(resource_path(img("res.jpeg"))),
 			size = (180,42))
 
 		res_label = ctk.CTkLabel(
@@ -834,18 +845,18 @@ def diff(event):
 
 
 		h2_img = ctk.CTkImage(
-			light_image = Image.open(img("h2.png")),
-			dark_image = Image.open(img("h2.png")),
+			light_image = Image.open(resource_path(img("h2.png"))),
+			dark_image = Image.open(resource_path(img("h2.png"))),
 			size = (220, 48))
 
 		h1_img = ctk.CTkImage( 
-                        light_image = Image.open(img("h1.png")), 
-                        dark_image = Image.open(img("h1.png")), 
+                        light_image = Image.open(resource_path(img("h1.png"))),
+                        dark_image = Image.open(resource_path(img("h1.png"))),
                         size = (220, 48))
 
 		h0_img = ctk.CTkImage( 
-                        light_image = Image.open(img("h0.png")), 
-                        dark_image = Image.open(img("h0.png")), 
+                        light_image = Image.open(resource_path(img("h0.png"))),
+                        dark_image = Image.open(resource_path(img("h0.png"))),
                         size = (220, 48))
 
 		hint_label = ctk.CTkLabel(
@@ -888,8 +899,8 @@ def diff(event):
 			popup.title("HANGY")
 
 			popup_img = ctk.CTkImage(
-				light_image = Image.open(img("pop.png")),
-				dark_image = Image.open(img("pop.png")),
+				light_image = Image.open(resource_path(img("pop.png"))),
+				dark_image = Image.open(resource_path(img("pop.png"))),
 				size = (350,200))
 
 			bg = ctk.CTkLabel(
@@ -1151,8 +1162,8 @@ play_label.bind(
 #-------------------------------------------------------SETTING--------------------------------------------------------------------
 
 set_img = ctk.CTkImage(
-        light_image = Image.open(img("set.png")),
-        dark_image = Image.open(img("set.png")),
+        light_image = Image.open(resource_path(img("set.png"))),
+        dark_image = Image.open(resource_path(img("set.png"))),
         size = (180,42))
 
 set_label = ctk.CTkLabel(
@@ -1186,8 +1197,8 @@ def set_window():
 	set_win.protocol("WM_DELETE_WINDOW", close_set)
 
 	set_win_img = ctk.CTkImage(
-        light_image = Image.open(img("set.jpeg")),
-        dark_image = Image.open(img("set.jpeg")),
+        light_image = Image.open(resource_path(img("set.jpeg"))),
+        dark_image = Image.open(resource_path(img("set.jpeg"))),
         size = (432,300)
 	)
 
@@ -1201,8 +1212,8 @@ def set_window():
 	set_win_label.image = set_win_img
 
 	vol_img = ctk.CTkImage(
-        	light_image = Image.open(img("vol.jpeg")),
-        	dark_image = Image.open(img("vol.jpeg")),
+        	light_image = Image.open(resource_path(img("vol.jpeg"))),
+        	dark_image = Image.open(resource_path(img("vol.jpeg"))),
         	size = (128.4,30))
 
 
@@ -1225,8 +1236,8 @@ def set_window():
 
 
 	music_img = ctk.CTkImage(
-                light_image = Image.open(img("mu.jpeg")),
-                dark_image = Image.open(img("mu.jpeg")),
+                light_image = Image.open(resource_path(img("mu.jpeg"))),
+                dark_image = Image.open(resource_path(img("mu.jpeg"))),
                 size = (128.4,30))
 
 	music_label = ctk.CTkLabel(
@@ -1237,8 +1248,8 @@ def set_window():
 
 
 	on_img = ctk.CTkImage(
-                light_image = Image.open(img("on.jpeg")),
-                dark_image = Image.open(img("on.jpeg")),
+                light_image = Image.open(resource_path(img("on.jpeg"))),
+                dark_image = Image.open(resource_path(img("on.jpeg"))),
                 size = (128.4,30))
 
 	on_label = ctk.CTkLabel(
@@ -1248,8 +1259,8 @@ def set_window():
 	on_label.place(relx=0.65, rely=0.65, anchor = "center")
 
 	off_img = ctk.CTkImage(
-                light_image = Image.open(img("off.jpeg")),
-                dark_image = Image.open(img("off.jpeg")),
+                light_image = Image.open(resource_path(img("off.jpeg"))),
+                dark_image = Image.open(resource_path(img("off.jpeg"))),
                 size = (128.4,30))
 
 	def toggle_music(event):
@@ -1278,8 +1289,8 @@ set_label.bind(
 #--------------------------------------------------------EXIT-----------------------------------------------------------------------
 
 exit_img = ctk.CTkImage(
-        light_image = Image.open(img("exit.png")),
-        dark_image = Image.open(img("exit.png")),
+        light_image = Image.open(resource_path(img("exit.png"))),
+        dark_image = Image.open(resource_path(img("exit.png"))),
         size = (180,42))
 
 def exit_game(event):
