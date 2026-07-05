@@ -1,4 +1,3 @@
-
 from PIL import Image 
 import customtkinter as ctk 
 import tkinter as tk 
@@ -49,6 +48,7 @@ app = ctk.CTk()
 app.withdraw()
 app.title("HANGY")
 app.geometry("720x500")
+app.resizable(False, False)
 #----------------------------------------------------MUSIC----------------------------------------------------------------------
 
 pygame.mixer.music.load(resource_path(music("Music.mpeg")))
@@ -205,6 +205,7 @@ def welcome_window(username):
     wel.title("Welcome")
     wel.geometry("600x450")
     wel.resizable(False, False)
+    wel.resizable(False, False)
 
     wel_img = ctk.CTkImage(
         light_image=Image.open(resource_path(img("wel.jpeg"))),
@@ -289,7 +290,7 @@ play_label.place(relx=0.3, rely=0.5, anchor = "center")
 
 set_win = None
 game_win = None
-
+popup = None
 
 diff_win = None
 def diff(event):
@@ -308,6 +309,7 @@ def diff(event):
 	diff_win = ctk.CTkToplevel()
 	diff_win.title("Choose Difficulty")
 	diff_win.geometry("720x500")
+	diff_win.resizable(False, False)
 
 	def close_diff():
 		global diff_win
@@ -520,7 +522,7 @@ def diff(event):
 		game_win = ctk.CTkToplevel()
 		game_win.title("HANGY")
 		game_win.geometry("720x500")
-
+		game_win.resizable(False, False)
 
 		def close_game():
 			global game_win
@@ -894,10 +896,24 @@ def diff(event):
 
 
 		def show_popup(message):
+			global popup
+
+			if popup is not None and popup.winfo_exists():
+				popup.lift()
+				popup.focus_force()
+				return
 
 			popup = ctk.CTkToplevel()
 			popup.geometry("350x200")
 			popup.title("HANGY")
+			popup.resizable(False, False)
+
+			def close_popup():
+				global popup
+				popup.destroy()
+				popup = None
+
+			popup.protocol("WM_DELETE_WINDOW", close_popup)
 
 			popup_img = ctk.CTkImage(
 				light_image = Image.open(resource_path(img("pop.png"))),
@@ -1189,6 +1205,7 @@ def set_window():
 	set_win = ctk.CTkToplevel()
 	set_win.title("SETTINGS")
 	set_win.geometry("432x300")
+	set_win.resizable(False, False)
 
 	def close_set():
 		global set_win
