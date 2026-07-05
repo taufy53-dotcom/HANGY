@@ -38,7 +38,6 @@ jobs:
             --clean ^
             --windowed ^
             --name HANGY ^
-            --icon=images\icon.ico ^
             --add-data "images;images" ^
             --add-data "music;music" ^
             --add-data "saves;saves" ^
